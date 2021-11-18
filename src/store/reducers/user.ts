@@ -1,5 +1,4 @@
-import { updateUsername } from '../actions/user';
-import { createReducer } from '@reduxjs/toolkit';
+import { updateUsername, UserActions, UserActionType } from '../actions/user';
 
 export interface UserState {
     username: string;
@@ -15,13 +14,17 @@ const getInitialState = (): UserState => {
     };
 };
 
-const updateUsernameApplier = (state: UserState, action: any) => {
-    const userName = action.payload;
-    state.username = userName;
+const updateUsernameApplier = (state: UserState, action: UserActions) => {
+    return {
+        ...state,
+        username: action.payload,
+    };
 };
 
-const userReducerBuilder = (builder: any) => {
-    builder.addCase(updateUsername, updateUsernameApplier);
+export const userReducer = (state = getInitialState(), action:UserActions) => {
+    switch (action.type) {
+        case UserActionType.UPDATE_USERNAME:
+            return updateUsernameApplier(state, action);
+    }
+    return state;
 };
-
-export const userReducer = createReducer(getInitialState(), userReducerBuilder);
