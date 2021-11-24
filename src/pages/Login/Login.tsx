@@ -14,8 +14,12 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUsername } from '../../store/actions/user';
-import {userNameSelector} from "../../store/selectors/user";
+import { loginUser } from '../../store/actions/user';
+import { Alert, CircularProgress } from '@mui/material';
+import {
+    authenticationErrorSelector,
+    authenticationInProgressSelector,
+} from '../../store/selectors/user';
 
 function Copyright(props: any) {
     return (
@@ -39,18 +43,21 @@ const theme = createTheme();
 
 export default function Login() {
     const dispatch = useDispatch();
-    const stateUserName = useSelector(userNameSelector);
+    const authenticationInProgress = useSelector(
+        authenticationInProgressSelector
+    );
+    const authenticationError = useSelector(authenticationErrorSelector);
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 
+    const handleLogin = (username: string, password: string) => {
+        const payload = { username, password };
+        dispatch(loginUser(payload));
+    };
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+        handleLogin(userName, password);
     };
 
     return (
@@ -96,7 +103,7 @@ export default function Login() {
                             <LockOutlinedIcon />
                         </Avatar>
                         <Typography component="h1" variant="h5">
-                            Sign in {stateUserName}
+                            Sign in
                         </Typography>
                         <Box
                             component="form"
@@ -114,7 +121,6 @@ export default function Login() {
                                 value={userName}
                                 onChange={(evt) => {
                                     setUserName(evt.target.value);
-                                    dispatch(updateUsername(evt.target.value));
                                 }}
                                 autoComplete="username"
                                 autoFocus
@@ -142,14 +148,33 @@ export default function Login() {
                                 }
                                 label="Remember me"
                             />
+
+                            {authenticationInProgress && (
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <CircularProgress />
+                                </Box>
+                            )}
                             <Button
                                 type="submit"
                                 fullWidth
                                 variant="contained"
+                                disabled={authenticationInProgress}
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 Sign In
                             </Button>
+
+                            {authenticationError && (
+                                <Alert severity="error">
+                                    {authenticationError.message}
+                                </Alert>
+                            )}
+
                             <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">

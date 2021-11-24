@@ -1,16 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React from 'react';
 import Login from './pages/Login';
-import Layout from './components/Layout/Layout';
-import Plates from "./pages/Plates/Plates";
+import Plates from './pages/Plates/Plates';
+import { baseRoute, loginRoute, platesRoute } from './constants/routes';
 
 const MainRouter = () => {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/plates" element={<Plates />} />
-                <Route path="/layout" element={<Layout />} />
+                <Route path={baseRoute} element={<Login />} />
+                <Route path={loginRoute} element={<Login />} />
+                <Route path={platesRoute} element={<Plates />} />
+                <Route path="*" element={<span>OOPS! 404</span>} />
             </Routes>
         </BrowserRouter>
     );
