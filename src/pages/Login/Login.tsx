@@ -12,14 +12,17 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../store/actions/user';
 import { Alert, CircularProgress } from '@mui/material';
 import {
     authenticationErrorSelector,
     authenticationInProgressSelector,
+    userIsAuthenticatedSelector,
 } from '../../store/selectors/user';
+import { useNavigate } from 'react-router-dom';
+import { platesRoute } from '../../constants/routes';
 
 function Copyright(props: any) {
     return (
@@ -43,10 +46,19 @@ const theme = createTheme();
 
 export default function Login() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const authenticationInProgress = useSelector(
         authenticationInProgressSelector
     );
     const authenticationError = useSelector(authenticationErrorSelector);
+    const userIsAuthenticated = useSelector(userIsAuthenticatedSelector);
+
+    useEffect(()=>{
+        if(userIsAuthenticated){
+            navigate(platesRoute);
+        }
+    },[userIsAuthenticated])
+
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
 

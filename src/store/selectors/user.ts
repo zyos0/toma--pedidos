@@ -12,3 +12,8 @@ export const authenticationErrorSelector = createSelector(
     userStateSelector,
     (userState) => userState.authenticationError
 );
+
+export const userIsAuthenticatedSelector = createSelector(
+    userStateSelector,
+    (userState)=>userState.authenticated
+)

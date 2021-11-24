@@ -16,7 +16,7 @@ const getInitialState = (): UserState => {
         authenticationError: null,
     };
 };
-
+//FALSY--->[Undefined, false, 0, “0”, NaN, null, ""]
 const onLoginSuccess = (
     state: UserState,
     { payload }: ReturnType<typeof UserActions.onLoginSuccess>
@@ -24,6 +24,7 @@ const onLoginSuccess = (
     return {
         ...state,
         userData: payload,
+        authenticated:true
     };
 };
 

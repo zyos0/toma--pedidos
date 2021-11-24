@@ -34,6 +34,7 @@ export const loginUser = (userData: any) => async (dispatch: Dispatch) => {
         const expirationDate = new Date(response.expiracion);
         setToken(response.token, expirationDate);
         //window.location.href = platesRoute;
+        //handleLoginSuccess()
 
         dispatch(onLoginSuccess(decodeToken()));
     } catch (error) {
