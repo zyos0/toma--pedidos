@@ -1,1 +1,1 @@
-export {default} from './Plates'
+export { default } from './Plates';

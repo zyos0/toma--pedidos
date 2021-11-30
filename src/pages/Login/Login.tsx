@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
+
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -12,10 +12,10 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../store/actions/user';
-import { Alert, CircularProgress } from '@mui/material';
+import { Alert } from '@mui/material';
 import {
     authenticationErrorSelector,
     authenticationInProgressSelector,
@@ -23,6 +23,7 @@ import {
 } from '../../store/selectors/user';
 import { useNavigate } from 'react-router-dom';
 import { platesRoute } from '../../constants/routes';
+import { LoadingButton } from '@mui/lab';
 
 function Copyright(props: any) {
     return (
@@ -53,11 +54,11 @@ export default function Login() {
     const authenticationError = useSelector(authenticationErrorSelector);
     const userIsAuthenticated = useSelector(userIsAuthenticatedSelector);
 
-    useEffect(()=>{
-        if(userIsAuthenticated){
+    useEffect(() => {
+        if (userIsAuthenticated) {
             navigate(platesRoute);
         }
-    },[userIsAuthenticated])
+    }, [navigate, userIsAuthenticated]);
 
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
@@ -161,25 +162,16 @@ export default function Login() {
                                 label="Remember me"
                             />
 
-                            {authenticationInProgress && (
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    <CircularProgress />
-                                </Box>
-                            )}
-                            <Button
+                            <LoadingButton
                                 type="submit"
+                                loading={authenticationInProgress}
                                 fullWidth
                                 variant="contained"
-                                disabled={authenticationInProgress}
+                                loadingPosition="end"
                                 sx={{ mt: 3, mb: 2 }}
                             >
                                 Sign In
-                            </Button>
+                            </LoadingButton>
 
                             {authenticationError && (
                                 <Alert severity="error">

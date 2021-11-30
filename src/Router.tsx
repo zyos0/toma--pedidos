@@ -13,13 +13,11 @@ import { useDispatch } from 'react-redux';
 import { UserActions } from './store/actions/user';
 import PrivateRoute from './components/PrivateRoute';
 import Clients from './pages/Clients';
-import CanAccess from './components/CanAccess';
 
 const MainRouter = () => {
     const token = getToken();
     const dispatch = useDispatch();
 
-    const SecureClient = CanAccess(Clients);
     if (token) {
         const decodedUserData = decodeToken();
         dispatch(UserActions.onLoginSuccess(decodedUserData));
@@ -38,7 +36,16 @@ const MainRouter = () => {
                         </PrivateRoute>
                     }
                 />
-                <Route path={clientsRoute} element={<SecureClient />} />
+
+                <Route
+                    path={clientsRoute}
+                    element={
+                        <PrivateRoute>
+                            <Clients />
+                        </PrivateRoute>
+                    }
+                />
+
                 <Route path="*" element={<span>OOPS! 404</span>} />
             </Routes>
         </BrowserRouter>

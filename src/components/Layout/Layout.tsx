@@ -12,15 +12,18 @@ import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import {
+    Menu as MenuIcon,
+    Fastfood as FastfoodIcon,
+    People as PeopleIcon,
+    ChevronLeft as ChevronLeftIcon,
+    Notifications as NotificationsIcon,
+} from '@mui/icons-material';
 
 import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { clientsRoute, platesRoute } from '../../constants/routes';
 
 function Copyright(props: any) {
     return (
@@ -94,8 +97,12 @@ const mdTheme = createTheme();
 
 export default function DashboardContent(props: any) {
     const [open, setOpen] = React.useState(true);
+    const navigate = useNavigate();
     const toggleDrawer = () => {
         setOpen(!open);
+    };
+    const goTo = (url: string) => {
+        navigate(url);
     };
 
     return (
@@ -151,17 +158,17 @@ export default function DashboardContent(props: any) {
                     </Toolbar>
                     <Divider />
                     <List>
-                        <ListItem button>
+                        <ListItem onClick={() => goTo(platesRoute)} button>
                             <ListItemIcon>
-                                <DashboardIcon />
+                                <FastfoodIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Dashboard" />
+                            <ListItemText primary="Plates" />
                         </ListItem>
-                        <ListItem button>
+                        <ListItem onClick={() => goTo(clientsRoute)} button>
                             <ListItemIcon>
-                                <ShoppingCartIcon />
+                                <PeopleIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Orders" />
+                            <ListItemText primary="Clients" />
                         </ListItem>
                     </List>
                     <Divider />

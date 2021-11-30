@@ -1,11 +1,9 @@
 import { createAction, Dispatch } from '@reduxjs/toolkit';
 import httpClient from '../../services/httpClient';
-import { loginRoute, platesRoute } from '../../constants/routes';
 import { loginUrl } from '../../constants/endpoints';
 import { decodeToken, setToken } from '../../utils/tokenManagement';
 
 export enum UserActionType {
-    LOGIN_USER = 'LOGIN_USER',
     ON_LOGIN_SUCCESS = 'ON_LOGIN_SUCCESS',
     ON_LOGIN_ERROR = 'ON_LOGIN_ERROR',
     TOGGLE_LOADING_STATE = 'TOGGLE_LOADING_STATE',
