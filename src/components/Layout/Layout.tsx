@@ -19,11 +19,17 @@ import {
     People as PeopleIcon,
     ChevronLeft as ChevronLeftIcon,
     Notifications as NotificationsIcon,
+    FileCopy as FileCopyIcon,
+    ShoppingCart as ShoppingCartIcon,
 } from '@mui/icons-material';
 
 import { ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { clientsRoute, platesRoute } from '../../constants/routes';
+import {
+    clientsRoute,
+    invoicesRoute,
+    platesRoute,
+} from '../../constants/routes';
 
 function Copyright(props: any) {
     return (
@@ -169,6 +175,22 @@ export default function DashboardContent(props: any) {
                                 <PeopleIcon />
                             </ListItemIcon>
                             <ListItemText primary="Clients" />
+                        </ListItem>
+                        <ListItem onClick={() => goTo(invoicesRoute)} button>
+                            <ListItemIcon>
+                                <FileCopyIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Invoices" />
+                        </ListItem>
+
+                        <ListItem
+                            onClick={() => goTo(`${invoicesRoute}/new`)}
+                            button
+                        >
+                            <ListItemIcon>
+                                <ShoppingCartIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="new Invoice" />
                         </ListItem>
                     </List>
                     <Divider />
